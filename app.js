@@ -1,29 +1,44 @@
 const express = require('express');
+require('dotenv').config();
 const app = express();
-const port = 3000;
 let http = require('http');
 let url = require('url');
-
+let userService = require('./service/userService');
 
 app.get('/test', function (req, res) {
-    console.log("\x1b[45m", url);
-    console.log("\x1b[42m", req.originalUrl);
-//    console.log("\x1b[42m", res);
+   console.log("\x1b[42m", process.env.PORT);
     res.send('Hello World!');
 });
 
-app.listen(3000, function () {
-    console.log("\x1b[46m",'Example app listening on port 3000!');
+module.exports = app;
+
+
+require('./router')(app);
+/**
+ * 404 ошибка
+ */
+app.use(function(req, res, next) {
+    let err = {};
+    err.status = 404;
+    next(err);
+
 });
 
-/*
-
-console.log("Server start");
 
 
-//create a server object:
-http.createServer(function (req, res) {
-    console.log(res);
-    res.write('Hello World!'); //write a response to the client
-    res.end(); //end the response
-}).listen(3000); //the server object listens on port 8080*/
+
+/**
+ * Отдать ошибку
+ */
+app.use(function(err, req, res, next) {
+    res.status(err.status);
+    res.json({"code": 1});
+});
+
+
+
+
+
+app.listen(process.env.PORT, function () {
+        console.log("\x1b[42m",'Example app listening on port 3000!');
+});
