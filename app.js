@@ -32,13 +32,8 @@ app.use(function(req, res, next) {
  */
 app.use(function(err, req, res, next) {
     res.status(err.status);
-    res.json({"code": 1});
+    res.json({"code": 1, "err": err.status});
 });
 
 
 
-
-
-app.listen(process.env.PORT, function () {
-        console.log("\x1b[42m",'Example app listening on port 3000!');
-});
