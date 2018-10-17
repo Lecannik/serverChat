@@ -3,19 +3,15 @@
  */
 const {Int32, ObjectId, Decimal128, Double} = require('mongodb');
 const validator = require('validator');
-
-
+const fs = require('fs');
+const buffer = require("buffer");
+let pathExcel =fs.readFileSync("test.xlsx");
 
 class User {
     constructor(objParams) {
-        let arrPropsForjParamsorThisClass = {
-            'userName': "",
-            'userPass': "",
-            'userMail': ""
-        };
+        let arrPropsForjParamsorThisClass = ['userName','userPass','userMail'];
 
         this.objParams = objParams;
-        console.log("\x1b[42m",this.objParams);
 
 
     }
@@ -32,13 +28,25 @@ class User {
                 dateTime : formattedDate
             };
 
-
-            console.log("\x1b[45m", userObj);
-            let result =  userObj;
+          let result =  userObj;
             return result;
 
 
     };
+
+
+    async openExcel()
+    {
+        try {
+          //  console.log("\x1b[42m",   pathExcel);
+            let dataExcel = JSON.parse(pathExcel.toString());
+            console.log("\x1b[42m",dataExcel);
+
+
+        } catch (err) {
+           console.log("\x1b[42m" , err);
+        }
+    }
 
 }
 

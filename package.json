@@ -4,7 +4,7 @@
   "description": "test server for chat",
   "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon --inspect ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +22,7 @@
     "express": "^4.16.3",
     "http": "0.0.0",
     "mongodb": "^3.1.8",
+    "npm": "^6.4.1",
     "validator": "^10.8.0"
   }
 }

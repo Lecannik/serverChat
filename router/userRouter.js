@@ -3,7 +3,7 @@ let router = express.Router();
 let User = require('../service/userService');
 
 
- router.get('/gettest', function (req, res, next) {
+ router.get('/getTest', function (req, res, next) {
      try {
 
          console.log("\x1b[46m", "Test api worked");
@@ -11,8 +11,7 @@ let User = require('../service/userService');
 
 
          result.createUser();
-         console.log("\x1b[42m", result);
-         res.json({"code": 0, "name": result.objParams.userName, "pass": result.objParams.userPass, "mail": result.objParams.userMail});
+         res.json({"code": 'gettest', "name": result.objParams.userName, "pass": result.objParams.userPass, "mail": result.objParams.userMail});
 
          //   res.end(result);
      }
@@ -21,6 +20,14 @@ let User = require('../service/userService');
      }
  })
 
+router.get('/excelFile', function (req, res, next) {
+
+    let resultExcel = new User();
+    resultExcel.openExcel();
+    res.json({"code": "excelFile", 'res': resultExcel})
+
+
+});
 
 
 module.exports = router;
