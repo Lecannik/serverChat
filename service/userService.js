@@ -4,8 +4,9 @@
 const {Int32, ObjectId, Decimal128, Double} = require('mongodb');
 const validator = require('validator');
 const fs = require('fs');
-const buffer = require("buffer");
-let pathExcel =fs.readFileSync("test.xlsx");
+const XLSX = require('xlsx');
+const request = require('request');
+let pathExcel = fs.readFileSync("test.xlsx");
 
 class User {
     constructor(objParams) {
@@ -38,10 +39,25 @@ class User {
     async openExcel()
     {
         try {
-          //  console.log("\x1b[42m",   pathExcel);
-            let dataExcel = JSON.parse(pathExcel.toString());
-            console.log("\x1b[42m",dataExcel);
 
+            /*
+              *****  Асинхронная функция создания файла Excel  *****
+             */
+           /* await fs.appendFile('myNewFile1.xls', pathExcel, function (err) {
+                if (err)
+                {
+                    console.log("\x1b[42m", err);
+                }
+
+                console.log('Saved!');
+            });
+*/
+            let workBook = XLSX.read(pathExcel, {type:'buffer'});
+            for (let obj in workBook.Sheets.Лист2.C6.c){
+                console.log("\x1b[42m", obj);
+            }
+            //console.log("\x1b[42m", workBook.Sheets['Лист2'].C6.v);
+            //TODO  Доделать парсер
 
         } catch (err) {
            console.log("\x1b[42m" , err);

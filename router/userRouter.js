@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+let fs  = require('fs');
 let User = require('../service/userService');
 
 
@@ -23,8 +24,10 @@ let User = require('../service/userService');
 router.get('/excelFile', function (req, res, next) {
 
     let resultExcel = new User();
-    resultExcel.openExcel();
-    res.json({"code": "excelFile", 'res': resultExcel})
+    let  file = resultExcel.openExcel();
+
+
+    res.json({"code": "excelFile", 'res': file})
 
 
 });
