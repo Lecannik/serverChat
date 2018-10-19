@@ -1,6 +1,5 @@
 let express = require('express');
 let router = express.Router();
-let fs  = require('fs');
 let User = require('../service/userService');
 
 
@@ -19,15 +18,15 @@ let User = require('../service/userService');
      catch (e) {
          console.log("\x1b[43m", e);
      }
- })
+ });
 
-router.get('/excelFile', function (req, res, next) {
+
+router.post('/excel', function (req, res, next) {
 
     let resultExcel = new User();
-    let  file = resultExcel.openExcel();
+    let result  = resultExcel.openExcel();
 
-
-    res.json({"code": "excelFile", 'res': file})
+    res.json({"code": "excelFile", 'res': result})
 
 
 });

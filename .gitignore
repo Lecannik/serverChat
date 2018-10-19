@@ -1,8 +1,2 @@
 .idea
 node_modules
-*.txt
-
-*.xls
-test.xlsx
-.xlsx
-*.xlsx

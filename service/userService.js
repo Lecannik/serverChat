@@ -6,7 +6,6 @@ const validator = require('validator');
 const fs = require('fs');
 const XLSX = require('xlsx');
 const request = require('request');
-let pathExcel = fs.readFileSync("test.xlsx");
 
 class User {
     constructor(objParams) {
@@ -41,23 +40,22 @@ class User {
         try {
 
             /*
-              *****  Асинхронная функция создания файла Excel  *****
+            var buf = fs.readFileSync("sheetjs.xlsx");
+            var wb = XLSX.read(buf, {type:'buffer'});
              */
-           /* await fs.appendFile('myNewFile1.xls', pathExcel, function (err) {
-                if (err)
-                {
-                    console.log("\x1b[42m", err);
-                }
+            let pathExcel = fs.readFileSync("test.xlsx");
+            let w = XLSX.read(pathExcel, {type:'buffer'});
+            let json = XLSX.utils.sheet_to_json(w.Sheets[w.SheetNames[0]], {header:1});
+            let data = "";
+            json.splice(0,1);
+            for (let temp of json){
+                let datagramm = temp[2];
+                data = datagramm.split('|');
+                //TODO Разобрать массив датаграмы до запрса
 
-                console.log('Saved!');
-            });
-*/
-            let workBook = XLSX.read(pathExcel, {type:'buffer'});
-            for (let obj in workBook.Sheets.Лист2.C6.c){
-                console.log("\x1b[42m", obj);
+
             }
-            //console.log("\x1b[42m", workBook.Sheets['Лист2'].C6.v);
-            //TODO  Доделать парсер
+
 
         } catch (err) {
            console.log("\x1b[42m" , err);
