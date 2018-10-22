@@ -35,26 +35,51 @@ class User {
     };
 
 
+    /**
+    *openExcel
+     *  Функция для парсинга excel файла для Capital Project
+    *   pathExcel - путь к файлу
+    *   w - workBook, книга,
+    *   json - превратить excel-файл в json
+    *   data - здесь хранится массив строки datagramm
+    *   titleProduct - номер номенклатуры
+    *   weight - массив где есть вес.
+    *   weightTotal - непосредственно вес.
+    *
+    */
+
     async openExcel()
     {
         try {
 
-            /*
-            var buf = fs.readFileSync("sheetjs.xlsx");
-            var wb = XLSX.read(buf, {type:'buffer'});
-             */
+
             let pathExcel = fs.readFileSync("test.xlsx");
             let w = XLSX.read(pathExcel, {type:'buffer'});
             let json = XLSX.utils.sheet_to_json(w.Sheets[w.SheetNames[0]], {header:1});
-            let data = "";
+            let data;
+            let titleProduct = [];
+            let weight = [];
+            let weightTotal = [];
             json.splice(0,1);
             for (let temp of json){
                 let datagramm = temp[2];
                 data = datagramm.split('|');
-                //TODO Разобрать массив датаграмы до запрса
+                titleProduct.push(data[4]);
+                weight.push(data[14].split(';'));
+
+
 
 
             }
+
+
+            for (let arrayWeight of weight) {
+                weightTotal.push(arrayWeight[2])
+            }
+
+            let object = {"titleProduct": titleProduct, "weightTotal": weightTotal }
+            console.log("\x1b[42m", object);
+
 
 
         } catch (err) {
