@@ -77,8 +77,8 @@ class User {
                 weightTotal.push(arrayWeight[2])
             }
 
-            let object = {"titleProduct": titleProduct, "weightTotal": weightTotal }
-            console.log("\x1b[42m", object);
+            let object = {"titleProduct": titleProduct, "weightTotal": weightTotal };
+            return object;
 
 
 

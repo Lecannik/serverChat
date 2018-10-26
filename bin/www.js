@@ -3,6 +3,14 @@
 /**
  * Module dependencies.
  */
+const WebSocketServer = require('ws');
+const SocketServer = require('ws').Server;
+let express = require('express');
+
+
+// подключенные клиенты
+let clients = [];
+
 
 let  app = require('../app');
 let  debug = require('debug')('nodeCms:server');
@@ -28,6 +36,37 @@ let server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+/* Websocket movies */
+
+const wss = new SocketServer({ server });
+
+//init Websocket ws and handle incoming connect requests
+wss.on('connection', function connection(ws) {
+    console.log("connection ...");
+
+    //on connect message
+    ws.on('message', function incoming(message) {
+
+        ws.on('message', message => {
+            wss.clients.forEach(client => {
+                if(client.readyState === WebSocketServer.CLOSED){
+                    ws.on("close", function() {
+                        console.log("websocket connection close")
+                    })
+                }
+                else{
+                    console.log("\x1b[42m", message);
+                    client.send(message);
+                }
+
+            })
+        });
+
+    });
+
+   // ws.send('message from server at: ' + new Date());
+});
 
 /**
  * Normalize a port into a number, string, or false.

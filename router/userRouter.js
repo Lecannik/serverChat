@@ -21,10 +21,10 @@ let User = require('../service/userService');
  });
 
 
-router.post('/excel', function (req, res, next) {
+router.get('/excel', async function (req, res, next) {
 
     let resultExcel = new User();
-    let result  = resultExcel.openExcel();
+    let result = await resultExcel.openExcel();
 
     res.json({"code": "excelFile", 'res': result})
 
